@@ -1056,16 +1056,18 @@ undefined
 
 #### 答案: A
 
-只有 6 种 [falsy](https://developer.mozilla.org/zh-CN/docs/Glossary/Falsy) 值:
+只有 8 种 [falsy](https://developer.mozilla.org/zh-CN/docs/Glossary/Falsy) 值:
 
 
 
 - `undefined`
 - `null`
 - `NaN`
-- `0`
-- `''` (empty string)
 - `false`
+- `''` (empty string)
+- `0`
+- `-0`
+- `0n` (BigInt(0))
 
 `Function` 构造函数, 比如 `new Number` 和 `new Boolean`，是 [truthy](https://developer.mozilla.org/zh-CN/docs/Glossary/Truthy)。
 
@@ -4032,15 +4034,15 @@ myFunc(1, 2, 3);
 
 ```javascript
 function getFine(speed, amount) {
-  const formattedSpeed = new Intl.NumberFormat({
+  const formattedSpeed = new Intl.NumberFormat(
     'en-US',
     { style: 'unit', unit: 'mile-per-hour' }
-  }).format(speed)
+  ).format(speed)
 
-  const formattedAmount = new Intl.NumberFormat({
+  const formattedAmount = new Intl.NumberFormat(
     'en-US',
     { style: 'currency', currency: 'USD' }
-  }).format(amount)
+  ).format(amount)
 
   return `The driver drove ${formattedSpeed} and has to pay ${formattedAmount}`
 }
@@ -4696,7 +4698,7 @@ const person = {
 
 - A: 不需要，对象默认就是可迭代的
 - B: `*[Symbol.iterator]() { for (let x in this) yield* this[x] }`
-- C: `*[Symbol.iterator]() { for (let x in this) yield* Object.values(this) }`
+- C: `*[Symbol.iterator]() { yield* Object.values(this) }`
 - D: `*[Symbol.iterator]() { for (let x in this) yield this }`
 
 <details><summary><b>答案</b></summary>
